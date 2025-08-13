@@ -12,6 +12,19 @@ repositories {
 dependencies {
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation 'io.rest-assured:rest-assured:5.5.5'
+    testImplementation 'org.assertj:assertj-core:3.27.3'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.13.4'
+
+    implementation platform('org.jdbi:jdbi3-bom:3.43.0')
+    implementation 'org.jdbi:jdbi3-core'
+    implementation 'org.jdbi:jdbi3-sqlobject'
+    implementation 'org.jdbi:jdbi3-jackson2'
+    implementation 'org.jdbi:jdbi3-postgres'
+    implementation 'org.postgresql:postgresql:42.7.2'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.17.1'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.19.2'
+
 }
 
 test {
