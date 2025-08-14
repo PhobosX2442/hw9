@@ -10,18 +10,16 @@ import org.jdbi.v3.postgres.PostgresPlugin;
 import org.jdbi.v3.sqlobject.SqlObjectPlugin;
 import util.DbCredentials;
 
-
-public abstract class MovieDbSteps {
+public abstract class DbBaseSteps {
 
     protected Jdbi dbClient;
 
-    public MovieDbSteps(String url, String username, String password) {
+    public DbBaseSteps(String url, String username, String password) {
         dbClient = buildDbClient(url, username, password);
         initMapper();
     }
 
-
-    public MovieDbSteps(DbCredentials creds) {
+    public DbBaseSteps(DbCredentials creds) {
         this(
                 "jdbc:postgresql://" + creds.getHost() + ":" + creds.getPort() + "/" + creds.getDbName(),
                 creds.getUsername(),
