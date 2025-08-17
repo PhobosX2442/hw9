@@ -5,6 +5,7 @@ import api.dto.MovieRequest;
 import api.dto.Response;
 import api.spec.CinescopeSpecs;
 
+
 public class MovieSteps {
 
     private final MovieClient movieClient = new MovieClient();
