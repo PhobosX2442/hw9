@@ -10,18 +10,14 @@ repositories {
 }
 
 dependencies {
-
-// JUnit 5 (одна версия через BOM)
     testImplementation platform('org.junit:junit-bom:5.13.4')
     testImplementation 'org.junit.jupiter:junit-jupiter-api'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.13.4'
     testImplementation 'org.assertj:assertj-core:3.27.3'
 
-// Lombok
-    compileOnly 'org.projectlombok:lombok:1.18.32'
-    annotationProcessor 'org.projectlombok:lombok:1.18.32'
 
-// Приложение (JDBI и прочие зависимости)
+// Остальные зависимости проекта
     implementation platform('org.jdbi:jdbi3-bom:3.43.0')
     implementation 'io.rest-assured:rest-assured:5.5.5'
     implementation 'org.jdbi:jdbi3-core'
@@ -31,9 +27,12 @@ dependencies {
     implementation 'org.postgresql:postgresql:42.7.2'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.17.1'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.19.2'
+
+    compileOnly "org.projectlombok:lombok:1.18.32"
+    annotationProcessor "org.projectlombok:lombok:1.18.32"
 }
 
 test {
     useJUnitPlatform()
-    testLogging { events "PASSED", "SKIPPED", "FAILED" }
 }
+

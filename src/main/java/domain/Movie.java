@@ -1,4 +1,4 @@
-package db.domain;
+package domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder(toBuilder = true)
 public class Movie {
-    private long id;
+    private int id;
     private String name;
     private int price;
     private String description;

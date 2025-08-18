@@ -1,34 +1,25 @@
 package util;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.jdbi.v3.core.Jdbi;
 
-import java.io.InputStream;
 
 public class DbUtils {
 
-    private static final String CREDENTIALS_FILE = "db_credentials.json";
+    private static final DbCredentials CREDS = DbCredentials.load();
 
-    private static DbCredentials credentials;
+    private DbUtils() {}
 
-    static {
-        try (
-                InputStream is = DbUtils.class.getClassLoader().getResourceAsStream(CREDENTIALS_FILE)) {
-            if (is == null) {
-                throw new RuntimeException("Файл " + CREDENTIALS_FILE + " не найден");
-            }
-            ObjectMapper mapper = new ObjectMapper();
-            credentials = mapper.readValue(is, DbCredentials.class);
-        } catch (Exception e) {
-            throw new RuntimeException("Ошибка при загрузке креденшалов", e);
-        }
+    public static Jdbi jdbi() {
+        return Jdbi.create(
+                CREDS.getUrl(),        // jdbc url
+                CREDS.getUsername(),   // username
+                CREDS.getPassword()    // password
+        );
     }
 
-    public static DbCredentials getCredentials(DbName dbName) {
-        if (credentials.getDbName().equals(dbName.getName())) {
-            return credentials;
-        } else {
-            throw new RuntimeException("Креденшалы для базы " + dbName + " не найдены");
-        }
+    public static DbCredentials getCreds(DbName dbMovies) {
+        return CREDS;
     }
+
+
 }
-
