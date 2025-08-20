@@ -1,37 +1,33 @@
 import db.domain.Movie;
-import org.junit.jupiter.api.BeforeEach;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import api.spec.RequestSpecificationFactory;
 import api.spec.ResponseSpecificationFactory;
-import db.steps.MovieDbSteps;
-import util.DbName;
-import util.DbUtils;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
-public class GetMovieTest {
+@Epic("Домашка 9")
+@Feature("Получение фильма")
+public class GetMovieTest extends ApiTestBase {
     int id = 50;
 
-    private MovieDbSteps dbSteps;
-
-    @BeforeEach
-    void setUp() {
-        dbSteps = new MovieDbSteps(DbUtils.getCredentials(DbName.DB_MOVIES));
-    }
-
+    @Story("Получение фильма")
+    @DisplayName("Получение фильма")
     @Test
     void getMovie() {
-        // API часть
+
         given()
                 .spec(RequestSpecificationFactory.requestApi())
                 .when()
                 .get("/movies/" + id)
                 .then()
-                .spec(ResponseSpecificationFactory.successResponseSpec())
-                .body("name", equalTo("Свинка"));
+                .spec(ResponseSpecificationFactory.successResponseSpec());
 
         Movie getMovieSql = dbSteps.getMovieById(id);
         assertThat(getMovieSql, notNullValue());

@@ -1,35 +1,30 @@
-import api.client.MovieClient;
 import api.dto.UpdateDto;
 import api.spec.RequestSpecificationFactory;
 import api.spec.ResponseSpecificationFactory;
+import api.spec.Randomizer;
 import db.domain.Movie;
-import db.steps.MovieDbSteps;
-import org.junit.jupiter.api.BeforeEach;
+import io.qameta.allure.*;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import util.DbName;
-import util.DbUtils;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
-public class UpdateMovieTest {
+@Epic("Домашка 9")
+@Feature("Обновление фильма")
+public class UpdateMovieTest extends ApiTestBase{
     int id = 40;
-    int price = 123456789;
+    int price = Randomizer.getRandomInt();
 
-    private MovieDbSteps dbSteps;
-    String token = ApiTestBase.loginAndGetToken();
-
-    @BeforeEach
-    void setUp() {
-        dbSteps = new MovieDbSteps(DbUtils.getCredentials(DbName.DB_MOVIES));
-    }
-
+    @Story("Обновление фильма")
+    @DisplayName("Обновление фильма")
     @Test
     void updateMovie() {
+        String token = ApiTestBase.loginAndGetToken();
         UpdateDto update = new UpdateDto(price);
-        // API часть
+
         given()
                 .spec(RequestSpecificationFactory.requestApi())
                 .header("Authorization", "Bearer " + token)

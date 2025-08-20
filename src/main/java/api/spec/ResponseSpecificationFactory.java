@@ -20,9 +20,9 @@ public class ResponseSpecificationFactory {
                 .build();
     }
 
-    public static ResponseSpecification deleteResponseSpec() {
+    public static ResponseSpecification invalidResponseSpec(){
         return new ResponseSpecBuilder()
-                .expectStatusCode(anyOf(is(200), is(404)))
+                .expectStatusCode(400)
                 .expectContentType("application/json")
                 .build();
     }

@@ -13,4 +13,8 @@ public class MovieDbSteps extends DbBaseSteps {
         return dbClient.withExtension(MovieDao.class, dao -> dao.selectById(id));
     }
 
+    public Movie getMovieByPrice(int price) {
+        return dbClient.withExtension(MovieDao.class, dao -> dao.selectByPrice(price));
+    }
+
 }
