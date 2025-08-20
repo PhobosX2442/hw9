@@ -1,13 +1,18 @@
-package dto;
+package db.domain;
 
-import domain.Genre;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-@Builder
-public class MovieRequest {
-    private long id;
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder(toBuilder = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class Movie {
+    private int id;
     private String name;
     private int price;
     private String description;
@@ -20,4 +25,3 @@ public class MovieRequest {
     private String[] reviews;
     private Genre genre;
 }
-

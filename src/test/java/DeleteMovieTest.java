@@ -1,6 +1,7 @@
-import api.client.MovieClient;
+
 import db.domain.Movie;
 import db.steps.MovieDbSteps;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import api.spec.RequestSpecificationFactory;
@@ -8,13 +9,11 @@ import api.spec.ResponseSpecificationFactory;
 import util.DbName;
 import util.DbUtils;
 
-
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.*;
 
-public class CreateMovieTest  {
+public class DeleteMovieTest  {
     int id = 6969;
 
     private MovieDbSteps dbSteps;
@@ -25,22 +24,18 @@ public class CreateMovieTest  {
     }
 
     @Test
-    public void createMovie() {
-        Movie movie = MovieClient.createMovie();
+    public void deleteMovie() {
         String token = ApiTestBase.loginAndGetToken();
 
         given()
                 .spec(RequestSpecificationFactory.requestApi())
                 .header("Authorization", "Bearer " + token)
-                .body(movie)
                 .when()
-                .post("/movies")
+                .delete("/movies/" + id)
                 .then()
-                .spec(ResponseSpecificationFactory.createResponseSpec())
-                .body("name", equalTo(MovieClient.getName()));
+                .spec(ResponseSpecificationFactory.deleteResponseSpec());
 
         Movie getMovieSql = dbSteps.getMovieById(id);
-        assertThat(getMovieSql, notNullValue());
-        assertThat(getMovieSql.getId(), equalTo(id));
+        assertThat(getMovieSql, nullValue());
     }
 }

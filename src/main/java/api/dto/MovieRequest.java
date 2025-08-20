@@ -1,16 +1,13 @@
-package domain;
+package api.dto;
 
-import lombok.AllArgsConstructor;
+import db.domain.Genre;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder(toBuilder = true)
-public class Movie {
-    private int id;
+@Builder
+public class MovieRequest {
+    private long id;
     private String name;
     private int price;
     private String description;
@@ -23,3 +20,4 @@ public class Movie {
     private String[] reviews;
     private Genre genre;
 }
+

@@ -1,4 +1,4 @@
-package domain;
+package db.domain;
 
 import lombok.Builder;
 import lombok.Data;

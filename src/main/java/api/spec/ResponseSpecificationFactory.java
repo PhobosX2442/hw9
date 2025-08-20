@@ -1,10 +1,12 @@
-package spec;
+package api.spec;
 
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.specification.ResponseSpecification;
 
+import static org.hamcrest.Matchers.*;
+
 public class ResponseSpecificationFactory {
-    public static ResponseSpecification getResponseSpec() {
+    public static ResponseSpecification successResponseSpec() {
         return new ResponseSpecBuilder()
                 .expectStatusCode(200)
                 .expectContentType("application/json")
@@ -13,7 +15,14 @@ public class ResponseSpecificationFactory {
 
     public static ResponseSpecification createResponseSpec() {
         return new ResponseSpecBuilder()
-                .expectStatusCode(201)
+                .expectStatusCode(anyOf(is(201), is(409)))
+                .expectContentType("application/json")
+                .build();
+    }
+
+    public static ResponseSpecification deleteResponseSpec() {
+        return new ResponseSpecBuilder()
+                .expectStatusCode(anyOf(is(200), is(404)))
                 .expectContentType("application/json")
                 .build();
     }
