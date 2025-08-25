@@ -1,0 +1,44 @@
+import db.steps.MovieDbSteps;
+import io.restassured.RestAssured;
+import api.spec.RequestSpecificationFactory;
+import api.spec.ResponseSpecificationFactory;
+import org.junit.jupiter.api.BeforeEach;
+import util.DbName;
+import util.DbUtils;
+
+public abstract class ApiTestBase {
+
+    static final String BASE_URI = "https://api.cinescope.krisqa.ru";
+
+    public String getToken() {
+        return token;
+    }
+    private String token = loginAndGetToken();
+    protected MovieDbSteps dbSteps;
+
+    static {
+        RestAssured.baseURI = BASE_URI;
+    }
+
+    protected static String loginAndGetToken() {
+
+        String loginPayload = "{\"email\":\"test-admin@mail.com\",\"password\":\"KcLMmxkJMjBD1\"}";
+
+        return RestAssured.given()
+                .spec(RequestSpecificationFactory.requestAuth())
+                .body(loginPayload)
+                .when()
+                .post("/login")
+                .then()
+                .spec(ResponseSpecificationFactory.successResponseSpec())
+                .extract()
+                .path("accessToken");
+
+    }
+
+    @BeforeEach
+    void initDbSteps() {
+        dbSteps = new MovieDbSteps(DbUtils.getCredentials(DbName.DB_MOVIES));
+    }
+
+}
