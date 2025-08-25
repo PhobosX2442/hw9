@@ -1,4 +1,6 @@
 import api.client.MovieClient;
+import api.dto.MovieFactory;
+import api.dto.MovieRequest;
 import api.dto.UpdateDto;
 import api.spec.Randomizer;
 import db.domain.Movie;
@@ -18,23 +20,16 @@ import static org.hamcrest.Matchers.*;
 @Epic("Домашка 9")
 @Feature("Создание фильма")
 public class CreateMovieTest extends ApiTestBase {
-    int id = 6969;
+    int id = 6970;
 
     @Story("Создание фильма")
     @DisplayName("Создание фильма")
     @Test
     public void createMovie() {
         String token = ApiTestBase.loginAndGetToken();
-        Movie movie = MovieClient.createMovie();
+        MovieRequest movie = MovieFactory.createMovie();
 
-        given()
-                .spec(RequestSpecificationFactory.requestApi())
-                .header("Authorization", "Bearer " + token)
-                .body(movie)
-                .when()
-                .post("/movies")
-                .then()
-                .spec(ResponseSpecificationFactory.createResponseSpec());
+        MovieClient.createMovie(movie,token);
 
         Movie getMovieSql = dbSteps.getMovieById(id);
         assertThat(getMovieSql, notNullValue());
