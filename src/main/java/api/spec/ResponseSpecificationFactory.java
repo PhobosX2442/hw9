@@ -15,7 +15,7 @@ public class ResponseSpecificationFactory {
 
     public static ResponseSpecification createResponseSpec() {
         return new ResponseSpecBuilder()
-                .expectStatusCode(anyOf(is(201), is(409)))
+                .expectStatusCode(201)
                 .expectContentType("application/json")
                 .build();
     }

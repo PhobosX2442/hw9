@@ -1,3 +1,4 @@
+import api.client.MovieClient;
 import db.domain.Movie;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
@@ -21,17 +22,10 @@ public class GetMovieTest extends ApiTestBase {
     @DisplayName("Получение фильма")
     @Test
     void getMovie() {
-
-        given()
-                .spec(RequestSpecificationFactory.requestApi())
-                .when()
-                .get("/movies/" + id)
-                .then()
-                .spec(ResponseSpecificationFactory.successResponseSpec());
+        MovieClient.getMovie(id);
 
         Movie getMovieSql = dbSteps.getMovieById(id);
         assertThat(getMovieSql, notNullValue());
         assertThat(getMovieSql.getId(), equalTo(id));
     }
-
 }

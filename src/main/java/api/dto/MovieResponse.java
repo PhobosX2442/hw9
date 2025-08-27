@@ -15,21 +15,18 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class MovieResponse {
-    private int id;
+    private Integer id;
     private String name;
-    private int price;
+    private Integer price;
     private String description;
     private String imageUrl;
     private String location;
     private boolean published;
-    private int rating;
-    private int genreId;
+    private Integer rating;
+    private Integer genreId;
     private String createdAt;
     private String[] reviews;
     private Genre genre;
-    //фантомный код
-    private String message;
-    private String error;
-    private String statusCode;
 }

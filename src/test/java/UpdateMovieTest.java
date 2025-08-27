@@ -1,4 +1,7 @@
-import api.dto.UpdateDto;
+import api.client.MovieClient;
+import api.dto.MovieFactory;
+import api.dto.MovieRequest;
+import api.dto.UpdateRequest;
 import api.spec.RequestSpecificationFactory;
 import api.spec.ResponseSpecificationFactory;
 import api.spec.Randomizer;
@@ -23,17 +26,9 @@ public class UpdateMovieTest extends ApiTestBase{
     @Test
     void updateMovie() {
         String token = ApiTestBase.loginAndGetToken();
-        UpdateDto update = new UpdateDto(price);
+        MovieRequest update = MovieFactory.createMovie404(price);
 
-        given()
-                .spec(RequestSpecificationFactory.requestApi())
-                .header("Authorization", "Bearer " + token)
-                .body(update)
-                .when()
-                .patch("/movies/" + id)
-                .then()
-                .spec(ResponseSpecificationFactory.successResponseSpec())
-                .body("price", equalTo(price));
+        MovieClient.updateMovie(id,price,update,token);
 
         Movie getMovieSql = dbSteps.getMovieById(id);
         assertThat(getMovieSql, notNullValue());
