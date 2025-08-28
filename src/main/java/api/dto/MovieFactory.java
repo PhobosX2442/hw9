@@ -7,13 +7,12 @@ public class MovieFactory {
     private static String name = "Новый фильм про код";
     private static int price = 99999;
 
-    public static MovieRequest createMovie(int id) {
+    public static MovieRequest createMovie() {
             return MovieRequest.builder()
                 .name(name)
                 .description("Очень длинное описание, которое точно поясняет, что это фильм созданный автотестом Светослава Петушкевича")
                 .genreId(2)
                 .price(price)
-                .id(id)
                 .location("MSK")
                 .published(false)
                 .build();

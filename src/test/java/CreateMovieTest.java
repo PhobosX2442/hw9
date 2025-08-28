@@ -2,6 +2,7 @@ import api.client.MovieClient;
 import api.dto.MovieFactory;
 import api.dto.MovieRequest;
 import api.spec.Randomizer;
+import api.steps.CreateMovieAndGetId;
 import db.domain.Movie;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
@@ -18,16 +19,13 @@ import static org.hamcrest.Matchers.*;
 @Feature("Создание фильма")
 public class CreateMovieTest extends ApiTestBase {
     String token = ApiTestBase.loginAndGetToken();
-    int id = 6666;
     int price = Randomizer.getRandomInt();
 
     @Story("Создание фильма с валидными данными")
     @DisplayName("Создание фильма с валидными данными")
     @Test
     public void createMovie() {
-        MovieRequest movie = MovieFactory.createMovie(id);
-
-        MovieClient.createMovie(movie,token);
+        int id = CreateMovieAndGetId.createAndGetMovieId(token);
 
         Movie getMovieSql = dbSteps.getMovieById(id);
         assertThat(getMovieSql, notNullValue());
@@ -35,6 +33,7 @@ public class CreateMovieTest extends ApiTestBase {
 
         MovieClient.deleteMovie(id,token);
     }
+
 
     @Story("Создание фильма без данных")
     @DisplayName("Создание фильма без данных")

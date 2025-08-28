@@ -21,6 +21,7 @@ public class MovieClient {
                 .when()
                 .post("/movies")
                 .then()
+                .log().all()
                 .spec(ResponseSpecificationFactory.createResponseSpec())
                 .extract()
                 .as(MovieResponse.class);
