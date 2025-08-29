@@ -14,5 +14,4 @@ public interface MovieDao {
     @Json
     @SqlQuery("SELECT to_jsonb(m) FROM public.movies as m WHERE price = :price")
     Movie selectByPrice(@Bind("price") int price);
-
 }

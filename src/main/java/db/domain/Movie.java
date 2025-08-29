@@ -12,15 +12,15 @@ import lombok.NoArgsConstructor;
 @Builder(toBuilder = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Movie {
-    private int id;
+    private Integer id;
     private String name;
-    private int price;
+    private Integer price;
     private String description;
     private String imageUrl;
     private String location;
     private boolean published;
-    private int rating;
-    private int genreId;
+    private Integer rating;
+    private Integer genreId;
     private String createdAt;
     private String[] reviews;
     private Genre genre;

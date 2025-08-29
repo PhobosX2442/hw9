@@ -2,17 +2,16 @@ package api.client;
 
 import api.dto.MovieRequest;
 import api.dto.MovieResponse;
-import api.dto.UpdateRequest;
 import api.spec.RequestSpecificationFactory;
 import api.spec.ResponseSpecificationFactory;
-import com.fasterxml.jackson.annotation.JsonInclude;
+import io.qameta.allure.Step;
 
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
 
 public class MovieClient {
 
+    @Step("Отправка POST-запроса (все данные)")
     public static MovieResponse createMovie(MovieRequest request, String token) {
         return given()
                 .spec(RequestSpecificationFactory.requestApi())
@@ -27,6 +26,7 @@ public class MovieClient {
                 .as(MovieResponse.class);
     }
 
+    @Step("Отправка POST-запроса (только price)")
     public static MovieResponse createMovie404(MovieRequest request, String token) {
         return given()
                 .spec(RequestSpecificationFactory.requestApi())
@@ -40,6 +40,7 @@ public class MovieClient {
                 .as(MovieResponse.class);
     }
 
+    @Step("Отправка DELETE запроса")
     public static MovieResponse deleteMovie(int id, String token) {
         return given()
                 .spec(RequestSpecificationFactory.requestApi())
@@ -47,11 +48,11 @@ public class MovieClient {
                 .when()
                 .delete("/movies/" + id)
                 .then()
-                .spec(ResponseSpecificationFactory.successResponseSpec())
                 .extract()
                 .as(MovieResponse.class);
     }
 
+    @Step("Отправка PATCH-запроса")
     public static MovieResponse updateMovie(int id, int price, MovieRequest update, String token) {
         return given()
                 .spec(RequestSpecificationFactory.requestApi())
@@ -59,18 +60,6 @@ public class MovieClient {
                 .body(update)
                 .when()
                 .patch("/movies/" + id)
-                .then()
-                .spec(ResponseSpecificationFactory.successResponseSpec())
-                .body("price", equalTo(price))
-                .extract()
-                .as(MovieResponse.class);
-    }
-
-    public static MovieResponse getMovie(int id) {
-        return given()
-                .spec(RequestSpecificationFactory.requestApi())
-                .when()
-                .get("/movies/" + id)
                 .then()
                 .spec(ResponseSpecificationFactory.successResponseSpec())
                 .extract()

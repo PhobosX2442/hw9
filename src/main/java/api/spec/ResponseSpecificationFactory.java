@@ -3,8 +3,6 @@ package api.spec;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.specification.ResponseSpecification;
 
-import static org.hamcrest.Matchers.*;
-
 public class ResponseSpecificationFactory {
     public static ResponseSpecification successResponseSpec() {
         return new ResponseSpecBuilder()
@@ -20,7 +18,7 @@ public class ResponseSpecificationFactory {
                 .build();
     }
 
-    public static ResponseSpecification invalidResponseSpec(){
+    public static ResponseSpecification invalidResponseSpec() {
         return new ResponseSpecBuilder()
                 .expectStatusCode(400)
                 .expectContentType("application/json")
