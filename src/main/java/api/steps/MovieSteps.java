@@ -1,4 +1,4 @@
-package base;
+package api.steps;
 
 import api.client.MovieClient;
 import api.dto.MovieRequest;
@@ -8,9 +8,8 @@ import io.qameta.allure.Step;
 public class MovieSteps {
 
     @Step("Создаём фильм")
-    public static MovieResponse createAndGetMovie(String token) {
-        MovieRequest movie = MovieFactory.createMovie();
-        return MovieClient.createMovie(movie, token);
+    public static MovieResponse createMovie(MovieRequest request, String token) {
+        return MovieClient.createMovie(request, token);
     }
 
 }

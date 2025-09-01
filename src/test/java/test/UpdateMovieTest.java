@@ -5,7 +5,7 @@ import api.dto.MovieRequest;
 import api.spec.Randomizer;
 import base.ApiTestBase;
 import base.MovieFactory;
-import base.MovieSteps;
+import api.steps.MovieSteps;
 import db.domain.Movie;
 import io.qameta.allure.*;
 import org.junit.jupiter.api.AfterEach;
@@ -35,7 +35,7 @@ public class UpdateMovieTest extends ApiTestBase {
     @DisplayName("Обновление фильма")
     @Test
     void updateMovie() {
-        id = MovieSteps.createAndGetMovie(token).getId();
+        id = MovieSteps.createMovie(MovieFactory.createMovie(), token).getId();
 
         Integer price = Randomizer.getRandomInt();
         MovieRequest update = MovieFactory.createMovie404(price);

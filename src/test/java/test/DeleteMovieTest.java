@@ -2,7 +2,8 @@ package test;
 
 import api.client.MovieClient;
 import base.ApiTestBase;
-import base.MovieSteps;
+import api.steps.MovieSteps;
+import base.MovieFactory;
 import db.domain.Movie;
 import io.qameta.allure.*;
 import org.junit.jupiter.api.AfterEach;
@@ -31,7 +32,7 @@ public class DeleteMovieTest extends ApiTestBase {
     @DisplayName("Удаление фильма")
     @Test
     public void deleteMovie() {
-        id = MovieSteps.createAndGetMovie(token).getId();
+        id = MovieSteps.createMovie(MovieFactory.createMovie(), token).getId();
         MovieClient.deleteMovie(id, token);
         Movie dbMovie = dbSteps.getMovieById(id);
 

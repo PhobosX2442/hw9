@@ -2,11 +2,11 @@ package test;
 
 import api.client.MovieClient;
 import base.ApiTestBase;
-import base.MovieSteps;
+import api.steps.MovieSteps;
+import base.MovieFactory;
 import db.domain.Movie;
 import io.qameta.allure.*;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -32,7 +32,7 @@ public class GetMovieTest extends ApiTestBase {
     @Test
     @DisplayName("Получение фильма")
     void getMovie() {
-        id = MovieSteps.createAndGetMovie(token).getId();
+        id = MovieSteps.createMovie(MovieFactory.createMovie(), token).getId();
 
         Movie dbMovie = dbSteps.getMovieById(id);
 
@@ -40,11 +40,8 @@ public class GetMovieTest extends ApiTestBase {
             assertThat(dbMovie, notNullValue());
         });
         Allure.step("Проверяем id", () -> {
-            // Дополнительные проверки на соответствие id
             assertThat(dbMovie.getId(), equalTo(id));
         });
-
-        // Остальные проверки можно оставить как в исходном тесте
     }
 
 }

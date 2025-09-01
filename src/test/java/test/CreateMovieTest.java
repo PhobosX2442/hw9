@@ -2,10 +2,11 @@ package test;
 
 import api.client.MovieClient;
 import api.dto.MovieRequest;
+import api.dto.MovieResponse;
 import api.spec.Randomizer;
 import base.ApiTestBase;
 import base.MovieFactory;
-import base.MovieSteps;
+import api.steps.MovieSteps;
 import db.domain.Movie;
 import io.qameta.allure.*;
 import org.junit.jupiter.api.AfterEach;
@@ -35,14 +36,17 @@ public class CreateMovieTest extends ApiTestBase {
     @Description("Вводим все данные")
     @Test
     public void createMovie() {
-        id = MovieSteps.createAndGetMovie(token).getId();
+        MovieResponse created = MovieSteps.createMovie(MovieFactory.createMovie(), token);
+        id = created.getId();
 
         Movie getMovieSql = dbSteps.getMovieById(id);
-        Allure.step("Проверяем, что фильм создан", () -> {
+        Allure.step("Проверяем сохранение данных в БД", () -> {
             assertThat(getMovieSql, notNullValue());
-            assertThat(getMovieSql.getId(), equalTo(id));
+            assertThat(created.getName(), equalTo(getMovieSql.getName()));
+            assertThat(created.getPrice(), equalTo(getMovieSql.getPrice()));
+            assertThat(created.getDescription(), equalTo(getMovieSql.getDescription()));
+            assertThat(created.getLocation(), equalTo(getMovieSql.getLocation()));
         });
-
     }
 
     @Story("Создание фильма без данных")
