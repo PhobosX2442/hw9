@@ -9,7 +9,6 @@ import base.MovieSteps;
 import db.domain.Movie;
 import io.qameta.allure.*;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -20,23 +19,14 @@ import static org.hamcrest.Matchers.*;
 @Feature("Создание фильма")
 @Story("Создание фильма")
 public class CreateMovieTest extends ApiTestBase {
-    private String token;
-    private Integer createdMovieId;
-
-    @BeforeEach
-    @Step("Авторизуемся и получаем id фильма")
-    void setup() {
-        token = loginAndGetToken();
-        createdMovieId = MovieSteps.createAndGetMovie(token).getId();
-    }
+    private Integer id;
 
     @AfterEach
     @Step("Очишаем БД от созданного фильма")
     void teardown() {
-        // Очистка: удаляем созданный фильм после каждого теста
-        if (createdMovieId != null) {
-            MovieClient.deleteMovie(createdMovieId, token);
-            createdMovieId = null;
+        if (id != null) {
+            MovieClient.deleteMovie(id, token);
+            id = null;
         }
     }
 
@@ -45,7 +35,7 @@ public class CreateMovieTest extends ApiTestBase {
     @Description("Вводим все данные")
     @Test
     public void createMovie() {
-        Integer id = createdMovieId;
+        id = MovieSteps.createAndGetMovie(token).getId();
 
         Movie getMovieSql = dbSteps.getMovieById(id);
         Allure.step("Проверяем, что фильм создан", () -> {
@@ -60,7 +50,6 @@ public class CreateMovieTest extends ApiTestBase {
     @Description("Вводим только ценник")
     @Test
     public void createMovie404() {
-        // В этом тесте предусловие уже создает фильм, но вы можете адаптировать логику под нужды
         MovieRequest movie = MovieFactory.createMovie404(Randomizer.getRandomInt());
         MovieClient.createMovie404(movie, token);
 

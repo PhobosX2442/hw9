@@ -6,7 +6,6 @@ import base.MovieSteps;
 import db.domain.Movie;
 import io.qameta.allure.*;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,23 +16,14 @@ import static org.hamcrest.Matchers.nullValue;
 @Feature("Удаление фильма")
 @Story("Удаление фильма")
 public class DeleteMovieTest extends ApiTestBase {
-    private String token;
-    private Integer createdMovieId;
-
-    @BeforeEach
-    @Step("Авторизуемся и получаем id фильма")
-    void setup() {
-        token = loginAndGetToken();
-        createdMovieId = MovieSteps.createAndGetMovie(token).getId();
-    }
+    private Integer id;
 
     @AfterEach
     @Step("Очишаем БД от созданного фильма")
     void teardown() {
-        // Очистка на случай, если тест не удалил фильм сам
-        if (createdMovieId != null) {
-            MovieClient.deleteMovie(createdMovieId, token);
-            createdMovieId = null;
+        if (id != null) {
+            MovieClient.deleteMovie(id, token);
+            id = null;
         }
     }
 
@@ -41,7 +31,7 @@ public class DeleteMovieTest extends ApiTestBase {
     @DisplayName("Удаление фильма")
     @Test
     public void deleteMovie() {
-        Integer id = createdMovieId;
+        id = MovieSteps.createAndGetMovie(token).getId();
         MovieClient.deleteMovie(id, token);
         Movie dbMovie = dbSteps.getMovieById(id);
 
@@ -53,7 +43,7 @@ public class DeleteMovieTest extends ApiTestBase {
 
 //    @Test
 //    public void hardDelete() {
-//        int id = 330;
+//        int id = 356;
 //        MovieClient.deleteMovie(id,token);
 //    }
 }

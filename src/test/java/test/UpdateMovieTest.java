@@ -1,15 +1,14 @@
 package test;
 
 import api.client.MovieClient;
-import base.ApiTestBase;
-import base.MovieFactory;
 import api.dto.MovieRequest;
 import api.spec.Randomizer;
+import base.ApiTestBase;
+import base.MovieFactory;
 import base.MovieSteps;
 import db.domain.Movie;
 import io.qameta.allure.*;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -21,23 +20,14 @@ import static org.hamcrest.Matchers.notNullValue;
 @Feature("Обновление фильма")
 @Story("Обновление фильма")
 public class UpdateMovieTest extends ApiTestBase {
-    private String token;
-    private Integer createdMovieId;
-
-    @BeforeEach
-    @Step("Авторизуемся и получаем id фильма")
-    void setup() {
-        token = loginAndGetToken();
-        createdMovieId = MovieSteps.createAndGetMovie(token).getId();
-    }
+    private Integer id;
 
     @AfterEach
     @Step("Очишаем БД от созданного фильма")
     void teardown() {
-        // Очистка: удаляем созданный фильм после каждого теста
-        if (createdMovieId != null) {
-            MovieClient.deleteMovie(createdMovieId, token);
-            createdMovieId = null;
+        if (id != null) {
+            MovieClient.deleteMovie(id, token);
+            id = null;
         }
     }
 
@@ -45,7 +35,7 @@ public class UpdateMovieTest extends ApiTestBase {
     @DisplayName("Обновление фильма")
     @Test
     void updateMovie() {
-        Integer id = createdMovieId;
+        id = MovieSteps.createAndGetMovie(token).getId();
 
         Integer price = Randomizer.getRandomInt();
         MovieRequest update = MovieFactory.createMovie404(price);

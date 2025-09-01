@@ -18,30 +18,21 @@ import static org.hamcrest.Matchers.notNullValue;
 @Feature("Получение фильма")
 @Story("Получение фильма")
 public class GetMovieTest extends ApiTestBase {
-    private String token;
-    private Integer createdMovieId;
-
-    @BeforeEach
-    @Step("Авторизуемся и получаем id фильма")
-    void setup() {
-        token = loginAndGetToken();
-        createdMovieId = MovieSteps.createAndGetMovie(token).getId();
-    }
+    private Integer id;
 
     @AfterEach
     @Step("Очишаем БД от созданного фильма")
     void teardown() {
-        // Очистка: удаляем созданный фильм после каждого теста
-        if (createdMovieId != null) {
-            MovieClient.deleteMovie(createdMovieId, token);
-            createdMovieId = null;
+        if (id != null) {
+            MovieClient.deleteMovie(id, token);
+            id = null;
         }
     }
 
     @Test
     @DisplayName("Получение фильма")
     void getMovie() {
-        Integer id = createdMovieId;
+        id = MovieSteps.createAndGetMovie(token).getId();
 
         Movie dbMovie = dbSteps.getMovieById(id);
 

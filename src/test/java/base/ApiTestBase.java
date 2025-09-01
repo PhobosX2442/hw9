@@ -13,25 +13,26 @@ import util.DbUtils;
 
 public abstract class ApiTestBase {
 
+
     static final String BASE_URI = "https://api.cinescope.krisqa.ru";
 
-    public String getToken() {
-        return token;
-    }
-
-    private String token = loginAndGetToken();
+    protected String token;
     protected MovieDbSteps dbSteps;
-    protected Integer createdMovieId = null;
 
     static {
         RestAssured.baseURI = BASE_URI;
     }
 
+    @BeforeEach
+    public void initToken() {
+        token = loginAndGetToken();
+        // можно также инициализировать dbSteps здесь
+        dbSteps = new MovieDbSteps(DbUtils.getCredentials(DbName.DB_MOVIES));
+    }
+
     @Step("Авторизация")
     protected static String loginAndGetToken() {
-
         String loginPayload = "{\"email\":\"test-admin@mail.com\",\"password\":\"KcLMmxkJMjBD1\"}";
-
         return RestAssured.given()
                 .spec(RequestSpecificationFactory.requestAuth())
                 .body(loginPayload)
@@ -43,22 +44,18 @@ public abstract class ApiTestBase {
                 .path("accessToken");
     }
 
-    @BeforeEach
-    void initDbSteps() {
-        dbSteps = new MovieDbSteps(DbUtils.getCredentials(DbName.DB_MOVIES));
-    }
-
     @AfterEach
     @Step("Очистка данных")
     public void cleanup() {
         if (createdMovieId != null) {
             try {
-                MovieClient.deleteMovie(createdMovieId, getToken());
+                MovieClient.deleteMovie(createdMovieId, token);
             } catch (Exception e) {
-                // Можно логировать ошибку, чтобы не мешать выполнению тестов
                 System.out.println("Ошибка при удалении фильма: " + e.getMessage());
             }
-            createdMovieId = null; // чтобы не удалять повторно
+            createdMovieId = null;
         }
     }
+
+    protected Integer createdMovieId = null;
 }
