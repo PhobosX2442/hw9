@@ -1,7 +1,7 @@
-package Tests;
+package test;
 
 import api.client.MovieClient;
-import api.steps.MovieSteps;
+import base.MovieSteps;
 import base.ApiTestBase;
 import db.domain.Movie;
 import io.qameta.allure.Allure;

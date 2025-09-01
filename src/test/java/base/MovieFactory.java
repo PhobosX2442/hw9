@@ -1,5 +1,6 @@
-package api.dto;
+package base;
 
+import api.dto.MovieRequest;
 import api.spec.Randomizer;
 
 public class MovieFactory {

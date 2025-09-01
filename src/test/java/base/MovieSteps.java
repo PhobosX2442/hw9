@@ -1,7 +1,6 @@
-package api.steps;
+package base;
 
 import api.client.MovieClient;
-import api.dto.MovieFactory;
 import api.dto.MovieRequest;
 import api.dto.MovieResponse;
 import io.qameta.allure.Step;

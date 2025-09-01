@@ -66,5 +66,3 @@ public class MovieClient {
                 .as(MovieResponse.class);
     }
 }
-
-

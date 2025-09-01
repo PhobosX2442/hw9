@@ -1,11 +1,11 @@
-package Tests;
+package test;
 
 import api.client.MovieClient;
 import base.ApiTestBase;
-import api.dto.MovieFactory;
+import base.MovieFactory;
 import api.dto.MovieRequest;
 import api.spec.Randomizer;
-import api.steps.MovieSteps;
+import base.MovieSteps;
 import db.domain.Movie;
 import io.qameta.allure.*;
 import org.junit.jupiter.api.DisplayName;
