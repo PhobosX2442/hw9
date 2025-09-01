@@ -8,13 +8,13 @@ import io.qameta.allure.Step;
 
 public class MovieSteps {
 
-    @Step("Создание фильма")
+    @Step("Создаём фильм")
     public static MovieResponse createAndGetMovie(String token) {
         MovieRequest movie = MovieFactory.createMovie();
         return MovieClient.createMovie(movie, token);
     }
 
-    @Step("Взятие id из созданного фильма")
+    @Step("Забираем id из созданного фильма")
     public static Integer getIdFromCreatedMovie(String token) {
         return createAndGetMovie(token).getId();
     }

@@ -1,14 +1,15 @@
-import api.client.MovieClient;
+package Tests;
+
 import api.dto.MovieResponse;
 import api.steps.MovieSteps;
+import base.ApiTestBase;
 import db.domain.Movie;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import api.spec.RequestSpecificationFactory;
-import api.spec.ResponseSpecificationFactory;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -32,11 +33,24 @@ public class GetMovieTest extends ApiTestBase {
 
         Movie dbMovie = dbSteps.getMovieById(id);
 
-        assertThat(dbMovie, notNullValue());
-        assertThat(createdMovie.getId(), equalTo(dbMovie.getId()));
-        assertThat(createdMovie.getName(), equalTo(dbMovie.getName()));
-        assertThat(createdMovie.getPrice(), equalTo(dbMovie.getPrice()));
-        assertThat(createdMovie.getDescription(), equalTo(dbMovie.getDescription()));
-        assertThat(createdMovie.getLocation(), equalTo(dbMovie.getLocation()));
+        Allure.step("Проверяем, что фильм создан", () -> {
+            assertThat(dbMovie, notNullValue());
+        });
+        Allure.step("Проверяем id", () -> {
+            assertThat(createdMovie.getId(), equalTo(dbMovie.getId()));
+        });
+        Allure.step("Проверяем название", () -> {
+            assertThat(createdMovie.getName(), equalTo(dbMovie.getName()));
+        });
+        Allure.step("Проверяем цену", () -> {
+            assertThat(createdMovie.getPrice(), equalTo(dbMovie.getPrice()));
+        });
+        Allure.step("Проверяем описание", () -> {
+            assertThat(createdMovie.getDescription(), equalTo(dbMovie.getDescription()));
+        });
+        Allure.step("Проверяем локацию", () -> {
+            assertThat(createdMovie.getLocation(), equalTo(dbMovie.getLocation()));
+        });
+
     }
 }

@@ -1,8 +1,10 @@
 package api.dto;
 
-public class MovieFactory {
+import api.spec.Randomizer;
 
-    private static String name = "Новый фильм про код";
+public class MovieFactory {
+    private static Integer randomName = Randomizer.getRandomInt();
+    private static String name = "Код, сделанный автотестом " + randomName;
     private static Integer price = 99999;
 
     public static MovieRequest createMovie() {

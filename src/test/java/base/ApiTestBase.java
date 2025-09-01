@@ -1,3 +1,5 @@
+package base;
+
 import api.client.MovieClient;
 import api.spec.RequestSpecificationFactory;
 import api.spec.ResponseSpecificationFactory;

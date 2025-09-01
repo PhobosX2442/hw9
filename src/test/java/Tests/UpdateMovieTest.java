@@ -1,12 +1,13 @@
+package Tests;
+
 import api.client.MovieClient;
+import base.ApiTestBase;
 import api.dto.MovieFactory;
 import api.dto.MovieRequest;
 import api.spec.Randomizer;
 import api.steps.MovieSteps;
 import db.domain.Movie;
-import io.qameta.allure.Epic;
-import io.qameta.allure.Feature;
-import io.qameta.allure.Story;
+import io.qameta.allure.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -36,13 +37,17 @@ public class UpdateMovieTest extends ApiTestBase {
         System.out.println("Цена до обновления: " + priceBefore);
 
         // Обновить прайс
-        MovieClient.updateMovie(id,price,update,token);
+        MovieClient.updateMovie(id,update,token);
 
         // Вытащить новый прайс
         Movie dbMovie = dbSteps.getMovieById(id);
         System.out.println("Цена в базе после обновления: " + dbMovie.getPrice());
 
-        assertThat(dbMovie, notNullValue());
-        assertThat(dbMovie.getPrice(), equalTo(price));
+        Allure.step("Проверяем значение новой цены", () -> {
+            assertThat(dbMovie, notNullValue());
+            assertThat(dbMovie.getPrice(), equalTo(price));
+        });
+
+
     }
 }

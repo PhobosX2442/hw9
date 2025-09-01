@@ -11,7 +11,7 @@ import static io.restassured.RestAssured.given;
 
 public class MovieClient {
 
-    @Step("Отправка POST-запроса (все данные)")
+    @Step("Отправляем POST запрос (все данные)")
     public static MovieResponse createMovie(MovieRequest request, String token) {
         return given()
                 .spec(RequestSpecificationFactory.requestApi())
@@ -26,7 +26,7 @@ public class MovieClient {
                 .as(MovieResponse.class);
     }
 
-    @Step("Отправка POST-запроса (только price)")
+    @Step("Отправляем POST запрос (только price)")
     public static MovieResponse createMovie404(MovieRequest request, String token) {
         return given()
                 .spec(RequestSpecificationFactory.requestApi())
@@ -40,7 +40,7 @@ public class MovieClient {
                 .as(MovieResponse.class);
     }
 
-    @Step("Отправка DELETE запроса")
+    @Step("Отправляем DELETE запрос")
     public static MovieResponse deleteMovie(int id, String token) {
         return given()
                 .spec(RequestSpecificationFactory.requestApi())
@@ -52,8 +52,8 @@ public class MovieClient {
                 .as(MovieResponse.class);
     }
 
-    @Step("Отправка PATCH-запроса")
-    public static MovieResponse updateMovie(int id, int price, MovieRequest update, String token) {
+    @Step("Отправляем PATCH запрос")
+    public static MovieResponse updateMovie(int id, MovieRequest update, String token) {
         return given()
                 .spec(RequestSpecificationFactory.requestApi())
                 .header("Authorization", "Bearer " + token)

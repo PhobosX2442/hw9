@@ -10,12 +10,12 @@ public class MovieDbSteps extends DbBaseSteps {
         super(creds);
     }
 
-    @Step("Получение фильма из БД по id")
+    @Step("Получаем фильма из БД по id")
     public Movie getMovieById(int id) {
         return dbClient.withExtension(MovieDao.class, dao -> dao.selectById(id));
     }
 
-    @Step("Получение фильма из БД по ценнику")
+    @Step("Получаем фильма из БД по ценнику")
     public Movie getMovieByPrice(int price) {
         return dbClient.withExtension(MovieDao.class, dao -> dao.selectByPrice(price));
     }

@@ -1,6 +1,10 @@
+package Tests;
+
 import api.client.MovieClient;
 import api.steps.MovieSteps;
+import base.ApiTestBase;
 import db.domain.Movie;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
@@ -26,11 +30,14 @@ public class DeleteMovieTest extends ApiTestBase {
         MovieClient.deleteMovie(id,token);
 
         Movie dbMovie = dbSteps.getMovieById(id);
-        assertThat(dbMovie, nullValue());
+
+        Allure.step("Проверяем, что фильм удалён", () -> {
+            assertThat(dbMovie, nullValue());
+        });
+
     }
 
-//    @Story("Принудительное удаление (не трогать без необходимости)")
-//    @DisplayName("Принудительное удаление (не трогать без необходимости)")
+
 //    @Test
 //    public void hardDelete() {
 //        int id = 133;
