@@ -8,6 +8,8 @@ import api.spec.Randomizer;
 import base.MovieSteps;
 import db.domain.Movie;
 import io.qameta.allure.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -19,16 +21,33 @@ import static org.hamcrest.Matchers.notNullValue;
 @Feature("Обновление фильма")
 @Story("Обновление фильма")
 public class UpdateMovieTest extends ApiTestBase {
-    private String token = ApiTestBase.loginAndGetToken();
-    private Integer price = Randomizer.getRandomInt();
+    private String token;
+    private Integer createdMovieId;
+
+    @BeforeEach
+    @Step("Авторизуемся и получаем id фильма")
+    void setup() {
+        token = loginAndGetToken();
+        createdMovieId = MovieSteps.createAndGetMovie(token).getId();
+    }
+
+    @AfterEach
+    @Step("Очишаем БД от созданного фильма")
+    void teardown() {
+        // Очистка: удаляем созданный фильм после каждого теста
+        if (createdMovieId != null) {
+            MovieClient.deleteMovie(createdMovieId, token);
+            createdMovieId = null;
+        }
+    }
 
     @Story("Обновление фильма")
     @DisplayName("Обновление фильма")
     @Test
     void updateMovie() {
-        createdMovieId = MovieSteps.getIdFromCreatedMovie(token);
         Integer id = createdMovieId;
 
+        Integer price = Randomizer.getRandomInt();
         MovieRequest update = MovieFactory.createMovie404(price);
 
         // Достать ценник до обновления Price
@@ -37,7 +56,7 @@ public class UpdateMovieTest extends ApiTestBase {
         System.out.println("Цена до обновления: " + priceBefore);
 
         // Обновить прайс
-        MovieClient.updateMovie(id,update,token);
+        MovieClient.updateMovie(id, update, token);
 
         // Вытащить новый прайс
         Movie dbMovie = dbSteps.getMovieById(id);
@@ -47,7 +66,6 @@ public class UpdateMovieTest extends ApiTestBase {
             assertThat(dbMovie, notNullValue());
             assertThat(dbMovie.getPrice(), equalTo(price));
         });
-
-
     }
+
 }

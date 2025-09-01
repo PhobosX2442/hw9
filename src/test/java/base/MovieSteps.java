@@ -13,8 +13,4 @@ public class MovieSteps {
         return MovieClient.createMovie(movie, token);
     }
 
-    @Step("Забираем id из созданного фильма")
-    public static Integer getIdFromCreatedMovie(String token) {
-        return createAndGetMovie(token).getId();
-    }
 }
