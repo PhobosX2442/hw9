@@ -21,7 +21,7 @@ public class DeleteMovieTest extends ApiTestBase {
 
     @AfterEach
     @Step("Очишаем БД от созданного фильма")
-    void teardown() {
+    void cleanup() {
         if (id != null) {
             MovieClient.deleteMovie(id, token);
             id = null;
@@ -41,10 +41,4 @@ public class DeleteMovieTest extends ApiTestBase {
         });
 
     }
-
-//    @Test
-//    public void hardDelete() {
-//        int id = 356;
-//        MovieClient.deleteMovie(id,token);
-//    }
 }

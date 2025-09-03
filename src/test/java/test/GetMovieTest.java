@@ -22,7 +22,7 @@ public class GetMovieTest extends ApiTestBase {
 
     @AfterEach
     @Step("Очишаем БД от созданного фильма")
-    void teardown() {
+    void cleanup() {
         if (id != null) {
             MovieClient.deleteMovie(id, token);
             id = null;

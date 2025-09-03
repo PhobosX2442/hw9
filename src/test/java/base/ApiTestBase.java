@@ -1,12 +1,10 @@
 package base;
 
-import api.client.MovieClient;
 import api.spec.RequestSpecificationFactory;
 import api.spec.ResponseSpecificationFactory;
 import db.steps.MovieDbSteps;
 import io.qameta.allure.Step;
 import io.restassured.RestAssured;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import util.DbName;
 import util.DbUtils;
@@ -24,11 +22,12 @@ public abstract class ApiTestBase {
     }
 
     @BeforeEach
-    public void initToken() {
+    public void initTokenAndSteps() {
         token = loginAndGetToken();
         // можно также инициализировать dbSteps здесь
         dbSteps = new MovieDbSteps(DbUtils.getCredentials(DbName.DB_MOVIES));
     }
+
 
     @Step("Авторизация")
     protected static String loginAndGetToken() {
@@ -44,18 +43,4 @@ public abstract class ApiTestBase {
                 .path("accessToken");
     }
 
-    @AfterEach
-    @Step("Очистка данных")
-    public void cleanup() {
-        if (createdMovieId != null) {
-            try {
-                MovieClient.deleteMovie(createdMovieId, token);
-            } catch (Exception e) {
-                System.out.println("Ошибка при удалении фильма: " + e.getMessage());
-            }
-            createdMovieId = null;
-        }
-    }
-
-    protected Integer createdMovieId = null;
 }

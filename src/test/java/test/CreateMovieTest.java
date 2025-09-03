@@ -4,9 +4,9 @@ import api.client.MovieClient;
 import api.dto.MovieRequest;
 import api.dto.MovieResponse;
 import api.spec.Randomizer;
+import api.steps.MovieSteps;
 import base.ApiTestBase;
 import base.MovieFactory;
-import api.steps.MovieSteps;
 import db.domain.Movie;
 import io.qameta.allure.*;
 import org.junit.jupiter.api.AfterEach;
@@ -24,7 +24,7 @@ public class CreateMovieTest extends ApiTestBase {
 
     @AfterEach
     @Step("Очишаем БД от созданного фильма")
-    void teardown() {
+    void cleanup() {
         if (id != null) {
             MovieClient.deleteMovie(id, token);
             id = null;
@@ -36,16 +36,17 @@ public class CreateMovieTest extends ApiTestBase {
     @Description("Вводим все данные")
     @Test
     public void createMovie() {
-        MovieResponse created = MovieSteps.createMovie(MovieFactory.createMovie(), token);
-        id = created.getId();
+        MovieRequest request = MovieFactory.createMovie();
+        MovieResponse response = MovieSteps.createMovie(request, token);
+        id = response.getId();
 
         Movie getMovieSql = dbSteps.getMovieById(id);
         Allure.step("Проверяем сохранение данных в БД", () -> {
             assertThat(getMovieSql, notNullValue());
-            assertThat(created.getName(), equalTo(getMovieSql.getName()));
-            assertThat(created.getPrice(), equalTo(getMovieSql.getPrice()));
-            assertThat(created.getDescription(), equalTo(getMovieSql.getDescription()));
-            assertThat(created.getLocation(), equalTo(getMovieSql.getLocation()));
+            assertThat(request.getName(), equalTo(getMovieSql.getName()));
+            assertThat(request.getPrice(), equalTo(getMovieSql.getPrice()));
+            assertThat(request.getDescription(), equalTo(getMovieSql.getDescription()));
+            assertThat(request.getLocation(), equalTo(getMovieSql.getLocation()));
         });
     }
 
