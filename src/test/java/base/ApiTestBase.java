@@ -11,7 +11,6 @@ import util.DbUtils;
 
 public abstract class ApiTestBase {
 
-
     static final String BASE_URI = "https://api.cinescope.krisqa.ru";
 
     protected String token;
@@ -24,10 +23,8 @@ public abstract class ApiTestBase {
     @BeforeEach
     public void initTokenAndSteps() {
         token = loginAndGetToken();
-        // можно также инициализировать dbSteps здесь
         dbSteps = new MovieDbSteps(DbUtils.getCredentials(DbName.DB_MOVIES));
     }
-
 
     @Step("Авторизация")
     protected static String loginAndGetToken() {
@@ -38,7 +35,7 @@ public abstract class ApiTestBase {
                 .when()
                 .post("/login")
                 .then()
-                .spec(ResponseSpecificationFactory.successResponseSpec())
+                .spec(ResponseSpecificationFactory.responseSpecification200())
                 .extract()
                 .path("accessToken");
     }

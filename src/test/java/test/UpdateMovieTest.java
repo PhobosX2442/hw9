@@ -2,7 +2,6 @@ package test;
 
 import api.client.MovieClient;
 import api.dto.MovieRequest;
-import api.spec.Randomizer;
 import base.ApiTestBase;
 import base.MovieFactory;
 import api.steps.MovieSteps;
@@ -37,7 +36,7 @@ public class UpdateMovieTest extends ApiTestBase {
     void updateMovie() {
         id = MovieSteps.createMovie(MovieFactory.createMovie(), token).getId();
 
-        Integer price = Randomizer.getRandomInt();
+        Integer price = MovieFactory.getRandomInt();
         MovieRequest update = MovieFactory.createMovie404(price);
 
         // Достать ценник до обновления Price

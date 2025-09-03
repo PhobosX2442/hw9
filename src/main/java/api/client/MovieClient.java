@@ -21,7 +21,7 @@ public class MovieClient {
                 .post("/movies")
                 .then()
                 .log().all()
-                .spec(ResponseSpecificationFactory.createResponseSpec())
+                .spec(ResponseSpecificationFactory.responseSpecification201())
                 .extract()
                 .as(MovieResponse.class);
     }
@@ -35,7 +35,7 @@ public class MovieClient {
                 .when()
                 .post("/movies")
                 .then()
-                .spec(ResponseSpecificationFactory.invalidResponseSpec())
+                .spec(ResponseSpecificationFactory.responseSpecification400())
                 .extract()
                 .as(MovieResponse.class);
     }
@@ -61,7 +61,7 @@ public class MovieClient {
                 .when()
                 .patch("/movies/" + id)
                 .then()
-                .spec(ResponseSpecificationFactory.successResponseSpec())
+                .spec(ResponseSpecificationFactory.responseSpecification200())
                 .extract()
                 .as(MovieResponse.class);
     }

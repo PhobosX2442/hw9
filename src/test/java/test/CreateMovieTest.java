@@ -3,7 +3,6 @@ package test;
 import api.client.MovieClient;
 import api.dto.MovieRequest;
 import api.dto.MovieResponse;
-import api.spec.Randomizer;
 import api.steps.MovieSteps;
 import base.ApiTestBase;
 import base.MovieFactory;
@@ -55,7 +54,7 @@ public class CreateMovieTest extends ApiTestBase {
     @Description("Вводим только ценник")
     @Test
     public void createMovie404() {
-        MovieRequest movie = MovieFactory.createMovie404(Randomizer.getRandomInt());
+        MovieRequest movie = MovieFactory.createMovie404(MovieFactory.getRandomInt());
         MovieClient.createMovie404(movie, token);
 
         Movie dbMovie = dbSteps.getMovieByPrice(movie.getPrice());

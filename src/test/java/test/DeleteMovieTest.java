@@ -1,12 +1,14 @@
 package test;
 
 import api.client.MovieClient;
-import base.ApiTestBase;
 import api.steps.MovieSteps;
+import base.ApiTestBase;
 import base.MovieFactory;
 import db.domain.Movie;
-import io.qameta.allure.*;
-import org.junit.jupiter.api.AfterEach;
+import io.qameta.allure.Allure;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -19,15 +21,6 @@ import static org.hamcrest.Matchers.nullValue;
 public class DeleteMovieTest extends ApiTestBase {
     private Integer id;
 
-    @AfterEach
-    @Step("Очишаем БД от созданного фильма")
-    void cleanup() {
-        if (id != null) {
-            MovieClient.deleteMovie(id, token);
-            id = null;
-        }
-    }
-
     @Story("Удаление фильма")
     @DisplayName("Удаление фильма")
     @Test
@@ -39,6 +32,6 @@ public class DeleteMovieTest extends ApiTestBase {
         Allure.step("Проверяем, что фильм удалён", () -> {
             assertThat(dbMovie, nullValue());
         });
-
     }
+
 }

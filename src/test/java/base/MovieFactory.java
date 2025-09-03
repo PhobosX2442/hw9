@@ -6,6 +6,7 @@ public class MovieFactory {
     public static Integer getRandomInt() {
         return (int) (Math.random() * 100000);
     }
+
     public static String getRandomName() {
         return "Код, сделанный автотестом " + getRandomInt();
     }
