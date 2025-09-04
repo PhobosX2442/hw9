@@ -5,6 +5,8 @@ import api.dto.MovieResponse;
 import api.spec.RequestSpecificationFactory;
 import api.spec.ResponseSpecificationFactory;
 import io.qameta.allure.Step;
+import io.restassured.RestAssured;
+import io.restassured.response.Response;
 
 
 import static io.restassured.RestAssured.given;
