@@ -7,3 +7,10 @@ dependencyResolutionManagement {
         maven { url 'https://jitpack.io' }
     }
 }
+
+pluginManagement {
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
