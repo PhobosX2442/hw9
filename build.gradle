@@ -8,10 +8,6 @@ plugins {
 group = 'org.example'
 version = '1.0-SNAPSHOT'
 
-repositories {
-    mavenCentral()
-}
-
 dependencies {
     implementation platform('org.jdbi:jdbi3-bom:3.20.0') //Jdbi
     implementation 'org.jdbi:jdbi3-core' //Jdbi
