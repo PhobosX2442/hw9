@@ -13,7 +13,7 @@ repositories {
 }
 
 dependencies {
-    implementation platform('org.jdbi:jdbi3-bom:3.43.0') //Jdbi
+    implementation platform('org.jdbi:jdbi3-bom:3.20.0') //Jdbi
     implementation 'org.jdbi:jdbi3-core' //Jdbi
     implementation 'org.jdbi:jdbi3-sqlobject' //Jdbi
     implementation 'org.jdbi:jdbi3-jackson2' //Jdbi
@@ -43,7 +43,6 @@ test {
             'junit.jupiter.execution.parallel.config.strategy'         : 'fixed',
             'junit.jupiter.execution.parallel.config.fixed.parallelism': '5'
     ]
-
 }
 
 publishing {
@@ -54,3 +53,7 @@ publishing {
     }
 }
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
