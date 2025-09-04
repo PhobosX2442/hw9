@@ -65,4 +65,16 @@ public class MovieClient {
                 .extract()
                 .as(MovieResponse.class);
     }
+
+    @Step("Отправляем DELETE запрос на отзыв")
+    public static MovieResponse deleteReview(int id, String token) {
+        return given()
+                .spec(RequestSpecificationFactory.requestApi())
+                .header("Authorization", "Bearer " + token)
+                .when()
+                .delete("/movies/" + id + "/reviews")
+                .then()
+                .extract()
+                .as(MovieResponse.class);
+    }
 }
