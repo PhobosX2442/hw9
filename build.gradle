@@ -30,7 +30,10 @@ dependencies {
 }
 
 test {
-    useJUnitPlatform()
+    useJUnitPlatform() {
+        if (project.hasProperty("tags")) {
+            includeTags(project.property("tags") as String)
+        }
     //Parallel tests
     systemProperties += [
             'junit.jupiter.execution.parallel.enabled'                 : true,
@@ -39,6 +42,7 @@ test {
             'junit.jupiter.execution.parallel.config.strategy'         : 'fixed',
             'junit.jupiter.execution.parallel.config.fixed.parallelism': '5'
     ]
+    
 }
 
 publishing {
