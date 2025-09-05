@@ -1,13 +1,12 @@
 package base;
 
+import api.client.AuthClient;
 import db.steps.MovieDbSteps;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeEach;
 import util.DbName;
 import util.DbUtils;
-
-import static api.client.AuthClient.loginAndGetToken;
 
 public abstract class ApiTestBase {
 
@@ -23,7 +22,7 @@ public abstract class ApiTestBase {
 
     @BeforeEach
     public void initTokenAndSteps() {
-        Response creds = loginAndGetToken();
+        Response creds = AuthClient.loginAndGetToken(AuthClient.Role.ADMIN);
         token = creds.path("accessToken");
         userId = creds.path("id");
         dbSteps = new MovieDbSteps(DbUtils.getCredentials(DbName.DB_MOVIES));
