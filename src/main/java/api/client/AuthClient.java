@@ -10,7 +10,8 @@ public class AuthClient {
 
     @Step("Авторизация")
     public static Response loginAndGetToken() {
-        String loginPayload = "{\"email\":\"test-admin@mail.com\",\"password\":\"KcLMmxkJMjBD1\"}";
+        //String loginPayload = "{\"email\":\"test-admin@mail.com\",\"password\":\"KcLMmxkJMjBD1\"}";
+        String loginPayload = "{\"email\":\"quicksilverx@yandex.ru\",\"password\":\"Qwer1234\"}";
         return RestAssured.given()
                 .spec(RequestSpecificationFactory.requestAuth())
                 .body(loginPayload)
