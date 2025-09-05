@@ -6,8 +6,7 @@ import api.dto.MovieResponse;
 import io.qameta.allure.Step;
 import org.junit.jupiter.api.Tag;
 
-public class MovieSteps  {
-
+public class MovieSteps {
 
     @Step("Создаём фильм")
     @Tag("smoke")
@@ -17,6 +16,6 @@ public class MovieSteps  {
 
     @Step("Удаляем отзыв")
     public static MovieResponse deleteReview(int id, String token) {
-        return MovieClient.deleteReview(id,token);
+        return MovieClient.deleteReview(id, token);
     }
 }
