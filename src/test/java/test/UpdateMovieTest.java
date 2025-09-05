@@ -9,6 +9,7 @@ import db.domain.Movie;
 import io.qameta.allure.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -32,6 +33,7 @@ public class UpdateMovieTest extends ApiTestBase {
 
     @Story("Обновление фильма")
     @DisplayName("Обновление фильма")
+    @Tag("smoke")
     @Test
     void updateMovie() {
         id = MovieSteps.createMovie(MovieFactory.createMovie(), token).getId();
