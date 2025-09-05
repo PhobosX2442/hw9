@@ -9,13 +9,12 @@ public class RequestSpecificationFactory {
     public static RequestSpecification requestApi() {
         return given()
                 .contentType("application/json")
-                .baseUri("https://api.cinescope.krisqa.ru");
+                .baseUri("https://api.cinescope.t-qa.ru");
     }
-
     public static RequestSpecification requestAuth() {
         return given()
                 .contentType("application/json")
-                .baseUri("https://auth.cinescope.krisqa.ru");
+                .baseUri("https://auth.cinescope.t-qa.ru");
     }
 }
 
