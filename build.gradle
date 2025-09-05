@@ -8,6 +8,10 @@ plugins {
 group = 'org.example'
 version = '1.0-SNAPSHOT'
 
+repositories {
+    mavenCentral()
+}
+
 dependencies {
     implementation platform('org.jdbi:jdbi3-bom:3.20.0') //Jdbi
     implementation 'org.jdbi:jdbi3-core' //Jdbi
@@ -24,8 +28,8 @@ dependencies {
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.19.2' //Jdbi(Jackson)
     compileOnly "org.projectlombok:lombok:1.18.32" //Lombok
     annotationProcessor "org.projectlombok:lombok:1.18.32" //Lombok
-    api  'com.fasterxml.jackson.core:jackson-databind:2.17.1' //Jackson
-    api  'io.rest-assured:rest-assured:5.5.5' //Rest-Assured
+    api 'com.fasterxml.jackson.core:jackson-databind:2.17.1' //Jackson
+    api 'io.rest-assured:rest-assured:5.5.5' //Rest-Assured
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.13.4' //Junit
 }
 
@@ -34,6 +38,7 @@ test {
         if (project.hasProperty("tags")) {
             includeTags(project.property("tags") as String)
         }
+    }
     //Parallel tests
     systemProperties += [
             'junit.jupiter.execution.parallel.enabled'                 : true,
@@ -42,7 +47,6 @@ test {
             'junit.jupiter.execution.parallel.config.strategy'         : 'fixed',
             'junit.jupiter.execution.parallel.config.fixed.parallelism': '5'
     ]
-    
 }
 
 publishing {
